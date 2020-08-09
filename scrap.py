@@ -1,6 +1,10 @@
+'''
+First page in Hacker news website is scrapped in this code uisng requests and Beautiful soup module
+'''
+
 import requests
 from bs4 import BeautifulSoup
-import pprint  # pretty print the data which is inbuilt module
+import pprint  # pretty is used print the data in pretty manner which is inbuilt module
 
 " requests module allows to get the web page html and beuatiful soup used to perform scraping on those html code"
 
@@ -16,17 +20,15 @@ soup = BeautifulSoup(response.text,'html.parser')
 #print(soup.body)  # Prints only body and contents of html
 #print(soup.body.contents)
 
-#print(soup.find_all('a')) # Finding all url tags and returns as list
-#print(soup.find(id="score_24029002"))
-
 '''
-using css selectors and select function.knowing about class by inspecting in the website
+using css selectors and select class which contains story links and class which contains votes 
+for the story links.
 links are stored in class storlink and votes are stored in class subtext in Hacker news website.
 '''
 links = soup.select('.storylink')
-print(links)
+#print(links)
 subtext = soup.select('.subtext')
-print(subtext)
+#print(subtext)
 
 def sorted_stories_list(hnList):
     """Sorting the list in decreasing order
@@ -36,7 +38,7 @@ def sorted_stories_list(hnList):
 def create_custom_hackernews(links,subtext):
     hn =[]
     for index,item in enumerate(links):
-        title = links[index].getText()  #function in beuatiful soup
+        title = links[index].getText()  #function in beaytiful soup
         href = links[index].get('href',None) # To get link of news if no link is there, default is None
         vote = subtext[index].select('.score') # points are stored inside class score of class subtext,if points not available, then class score wont be present
         if len(vote):
